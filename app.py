@@ -1,8 +1,8 @@
 import os
-
 import discord
 from dotenv import load_dotenv
 import random
+import re
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -33,7 +33,18 @@ async def on_message(message):
         
         await message.channel.send(''.join(response))
             
-            
+@client.event
+async def dice_roll(message):
+    if message.author == client.user:
+        return
+    if '/d' in message.content:
+        # msg = client.wait_for('message', check = check)
+        num = re.match('(?<=\/d).[0-9]+', message)
+
+        if num.isnumeric():
+            await message.channel.send(random.randrange(1,int(num)+1))
+        else: 
+            await message.channel.send('thats not a number, try again')     
 
 
 
