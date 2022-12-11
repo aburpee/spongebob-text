@@ -34,15 +34,16 @@ async def on_message(message):
         await message.channel.send(''.join(response))
             
 @client.event
-async def dice_roll(message):
+async def on_message(message):
     if message.author == client.user:
         return
     if '/d' in message.content:
+        # await message.channel.send(message.content)
         # msg = client.wait_for('message', check = check)
-        num = re.match('(?<=\/d).[0-9]+', message)
+        num = re.search('(?<=\/d).[0-9]+', message.content)
 
-        if num.isnumeric():
-            await message.channel.send(random.randrange(1,int(num)+1))
+        if num.group(0).isnumeric():
+            await message.channel.send(random.randrange(1,int(num.group(0))+1))
         else: 
             await message.channel.send('thats not a number, try again')     
 
