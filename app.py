@@ -38,8 +38,6 @@ async def on_message(message):
     if message.author == client.user:
         return
     if '/d' in message.content:
-        # await message.channel.send(message.content)
-        # msg = client.wait_for('message', check = check)
         num = re.search('(?<=\/d).[0-9]+', message.content)
 
         if num.group(0).isnumeric():
