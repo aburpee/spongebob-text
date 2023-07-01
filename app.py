@@ -25,41 +25,41 @@ bot = commands.Bot(command_prefix = '!', intents = intents)
 @bot.event
 async def on_ready():
     print(f'logged in as {bot.user.name}')
-# @bot.command(name='shit')
-# async def random_image(ctx, source_channel_id = 815464674404990988, source_server_id = 735280881664655410, target_server_id = 718995069847470141, target_channel_id = 718995070316970046):
-#     try:
+@bot.command(name='shit')
+async def random_image(ctx, source_channel_id = 815464674404990988, source_server_id = 735280881664655410, target_server_id = 718995069847470141, target_channel_id = 718995070316970046):
+    try:
         
-#         source_server = discord.utils.get(bot.guilds, id = source_server_id)
-#         target_server = discord.utils.get(bot.guilds, id = target_server_id)
-#         source_channel = discord.utils.get(source_server.channels, id = source_channel_id)
-#         target_channel = discord.utils.get(target_server.channels, id = target_channel_id)
+        source_server = discord.utils.get(bot.guilds, id = source_server_id)
+        target_server = discord.utils.get(bot.guilds, id = target_server_id)
+        source_channel = discord.utils.get(source_server.channels, id = source_channel_id)
+        target_channel = discord.utils.get(target_server.channels, id = target_channel_id)
 
+        messages = []
+        async for message in source_channel.history(limit = 500):
+            messages.append(message)
 
+        image_messages = [message for message in messages if message.attachments]
 
-#         await target_channel.send('@north.to')
-#         # messages = []
-#         # async for message in source_channel.history(limit = 500):
-#         #     messages.append(message)
+        if image_messages:
 
-#         # image_messages = [message for message in messages if message.attachments]
+            random_message = random.choice(image_messages)
 
-#         # if image_messages:
+            attachment = random_message.attachments[0]
+            image_url = attachment.url
+            sender = random_message.author
 
-#         #     random_message = random.choice(image_messages)
-
-#         #     attachment = random_message.attachments[0]
-#         #     image_url = attachment.url
-#         #     sender = random_message.author
-
-#         #     await target_channel.send(image_url)
-#         #     await target_channel.send(f'courtesy of {sender}')
-#         # else:
-#         #     await ctx.send('no image found')
-#     except discord.NotFound:
-#         await ctx.send('source image not found')
+            await target_channel.send(image_url)
+            await target_channel.send(f'courtesy of {sender}')
+        else:
+            await ctx.send('no image found')
+    except discord.NotFound:
+        await ctx.send('source image not found')
             
+@bot.command(name = 'problem')
+async def ask(ctx):
+    await ctx.send('https://tenor.com/view/whattheproblemis-martin-lawrence-nationalsecurity-gif-27064298')
 
-@bot.command(name='movie')
+@bot.command(name = 'movie')
 async def ask(ctx):
      await ctx.send('What movie would you like to watch?')
 
